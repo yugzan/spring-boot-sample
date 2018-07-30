@@ -42,16 +42,11 @@ make deploy-production-ssh
 '''
       }
     }
-    stage('clean') {
-      steps {
-        sh 'docker-compose run clean'
-      }
-    }
   }
   post {
     always {
+      sh 'docker-compose run clean'
       echo 'I will always say Hello again!'
-
     }
 
     success {
