@@ -30,7 +30,7 @@ pipeline {
       steps {
         sh '''make build-docker-prod-image
 docker push localhost:5000/java_sample_prod
-make deploy-production-local
+make deploy-production-ssh
 '''
       }
     }
