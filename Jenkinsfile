@@ -12,8 +12,17 @@ pipeline {
       }
     }
     stage('report') {
-      steps {
-        junit 'target/surefire-reports/*.xml'
+      parallel {
+        stage('report') {
+          steps {
+            junit 'target/surefire-reports/*.xml'
+          }
+        }
+        stage('coverage') {
+          steps {
+            cobertura(coberturaReportFile: 'target/site/cobertura/coverage.xml')
+          }
+        }
       }
     }
     stage('package') {
@@ -21,7 +30,6 @@ pipeline {
         sh 'docker-compose run package'
       }
     }
-   
     stage('archive') {
       steps {
         archiveArtifacts 'target/spring-boot-sample-data-rest-0.1.0.jar'
@@ -38,7 +46,7 @@ make deploy-production-ssh
       steps {
         sh 'docker-compose run clean'
       }
-    }     
+    }
   }
   post {
     always {
