@@ -21,7 +21,7 @@ pipeline {
         sh 'docker-compose run package'
       }
     }
-    stage('package') {
+    stage('clean') {
       steps {
         sh 'docker-compose run clean'
       }
