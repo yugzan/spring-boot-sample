@@ -21,6 +21,11 @@ pipeline {
         sh 'docker-compose run package'
       }
     }
+    stage('package') {
+      steps {
+        sh 'docker-compose run clean'
+      }
+    }    
     stage('archive') {
       steps {
         archiveArtifacts 'target/spring-boot-sample-data-rest-0.1.0.jar'
