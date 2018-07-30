@@ -21,11 +21,7 @@ pipeline {
         sh 'docker-compose run package'
       }
     }
-    stage('clean') {
-      steps {
-        sh 'docker-compose run clean'
-      }
-    }    
+   
     stage('archive') {
       steps {
         archiveArtifacts 'target/spring-boot-sample-data-rest-0.1.0.jar'
@@ -34,11 +30,15 @@ pipeline {
     stage('deploy') {
       steps {
         sh '''make build-docker-prod-image
-docker push localhost:5000/java_sample_prod
 make deploy-production-ssh
 '''
       }
     }
+    stage('clean') {
+      steps {
+        sh 'docker-compose run clean'
+      }
+    }     
   }
   post {
     always {
