@@ -20,7 +20,7 @@ test:
   volumes_from:
     - data
   working_dir: /app
-  command: "mvn test"
+  command: "mvn cobertura:cobertura test"
 
 server:
   image: localhost:5000/maven
@@ -39,3 +39,11 @@ package:
     - ~/.m2:/root/.m2
   working_dir: /app
   command: "mvn package"
+  
+clean:
+  image: localhost:5000/maven
+  volumes:
+    - ./:/app
+    - ~/.m2:/root/.m2
+  working_dir: /app
+  command: "mvn clean"  
